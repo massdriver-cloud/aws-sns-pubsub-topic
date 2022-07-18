@@ -11,7 +11,6 @@ resource "aws_sns_topic" "main" {
   display_name = coalesce(lookup(var.topic, "display_name", null), var.md_metadata.name_prefix)
   fifo_topic   = var.topic.fifo
 
-  # TODO: set to false if FIFO is false, should be conditional in UI
   content_based_deduplication = var.topic.fifo ? var.topic.content_based_deduplication : false
 
   application_failure_feedback_role_arn = aws_iam_role.feedback.arn

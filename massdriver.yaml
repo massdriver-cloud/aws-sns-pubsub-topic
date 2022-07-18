@@ -1,12 +1,10 @@
 schema: draft-07
 name: "aws-sns-pubsub-topic"
-description: "AWS SNS Pub/Sub Topic for event-driven architectures."
+description: "AWS SNS Pub/Sub Topic"
 ref: github.com/massdriver-cloud/aws-sns-pubsub-topic
 access: "public"
 type: "bundle"
 
-# TODO: titles & Descs
-# FIFO Topics: https://aws.amazon.com/sns/faqs/#:~:text=FIFO%20topics
 params:
   examples:
     - __name: FIFO Topic
@@ -23,6 +21,7 @@ params:
     - topic
   properties:
     topic:
+      title: Topic
       type: object
       properties:
         region:
@@ -32,10 +31,14 @@ params:
           description: "Display name used for SMS and email subscriptions."
           type: string
         fifo:
+          title: "First in, First out"
+          description: Enables strict ordering of topic messages. You can configure a message group by including a message group ID when publishing a message to a FIFO topic. For each message group ID, all messages are sent and delivered in order of their arrival.
           type: boolean
           default: false
-        # TODO: conditionally hide when fifo is false
         content_based_deduplication:
+          # TODO: conditionally hide when fifo is false
+          title: "Content-Based Deduplication"
+          description: Requires FIFO. Enables automatic content-based deduplication using a SHA-256 hash to generate the message deduplication ID using the body of the message. Alternatively a message deduplication ID can be manually set when publishing.
           type: boolean
           default: false
 
