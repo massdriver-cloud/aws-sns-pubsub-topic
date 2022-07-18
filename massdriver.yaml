@@ -1,0 +1,65 @@
+schema: draft-07
+name: "aws-sns-pubsub-topic"
+description: "AWS SNS Pub/Sub Topic for event-driven architectures."
+ref: github.com/massdriver-cloud/aws-sns-pubsub-topic
+access: "public"
+type: "bundle"
+
+# TODO: titles & Descs
+# FIFO Topics: https://aws.amazon.com/sns/faqs/#:~:text=FIFO%20topics
+params:
+  examples:
+    - __name: FIFO Topic
+      topic:
+        region: us-west-2
+        fifo: true
+        content_based_deduplication: true
+    - __name: Topic
+      topic:
+        region: us-west-2
+        fifo: false
+        content_based_deduplication: false
+  required:
+    - topic
+  properties:
+    topic:
+      type: object
+      properties:
+        region:
+          $ref: https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/aws-region.json
+        display_name:
+          title: "Display Name"
+          description: "Display name used for SMS and email subscriptions."
+          type: string
+        fifo:
+          type: boolean
+          default: false
+        # TODO: conditionally hide when fifo is false
+        content_based_deduplication:
+          type: boolean
+          default: false
+
+connections:
+  required:
+    - aws_authentication
+  properties:
+    aws_authentication:
+      $ref: massdriver/aws-iam-role
+
+artifacts:
+  properties: {}
+  # required:
+  #   - topic
+  # properties:
+  #   topic:
+  #     $ref: massdriver/aws-sns-topic
+
+ui:
+  ui:order:
+    - "topic"
+  topic:
+    ui:order:
+      - region
+      - display_name
+      - fifo
+      - content_based_deduplication
