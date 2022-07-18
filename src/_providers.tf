@@ -12,7 +12,6 @@ terraform {
   }
 }
 
-
 provider "aws" {
   region = var.topic.region
   assume_role {
