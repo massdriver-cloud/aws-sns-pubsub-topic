@@ -1,11 +1,13 @@
 # Operator Guide
 
-## Links
+## Helpful Links
+
 * [AWS Pub/Sub Pattern](https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-integrating-microservices/pub-sub.html)
 * [SNS FAQs](https://aws.amazon.com/sns/faqs/#:~:text=FIFO%20topics)
 * [Delivery policies](https://docs.aws.amazon.com/sns/latest/dg/sns-message-delivery-retries.html) - we should break these out here
+* [Example IAM policies](https://docs.aws.amazon.com/sns/latest/dg/sns-access-policy-use-cases.html)
 
-* [ ] Add notes on FIFO & CBD: https://docs.aws.amazon.com/sns/latest/api/API_SetTopicAttributes.html
+* [ ] Include notes on end-user on FIFO/ContentBasedDeduplication & the `MessageDeduplicationId`: https://docs.aws.amazon.com/sns/latest/api/API_SetTopicAttributes.html
 
 ## Design decisions
 * [x] SNS topic name is based on md metadata to ensure no collisions. FIFO extension conditionally added
@@ -13,3 +15,4 @@
 * [x] Auto generated display name
 * [x] Failure feedback is configured for all endpoint types to Cloudwatch Logs
   * [x] SNS Feedback (https://docs.aws.amazon.com/sns/latest/dg/sns-topic-attributes.html) 
+
