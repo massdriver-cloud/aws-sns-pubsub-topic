@@ -10,9 +10,7 @@
 * [ ] Include notes on end-user on FIFO/ContentBasedDeduplication & the `MessageDeduplicationId`: https://docs.aws.amazon.com/sns/latest/api/API_SetTopicAttributes.html
 
 ## Design decisions
-* [x] SNS topic name is based on md metadata to ensure no collisions. FIFO extension conditionally added
-* [x] display name defaults to md metadata name prefix
-* [x] Auto generated display name
+* [x] SNS topic name is based on Manifest name to ensure no collisions. FIFO extension conditionally added
+* [x] display name defaults to Manifest name
 * [x] Failure feedback is configured for all endpoint types to Cloudwatch Logs
   * [x] SNS Feedback (https://docs.aws.amazon.com/sns/latest/dg/sns-topic-attributes.html) 
-
