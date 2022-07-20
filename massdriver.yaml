@@ -20,7 +20,6 @@ params:
       topic:
         region: us-west-2
         fifo: false
-        content_based_deduplication: false
   required:
     - topic
   properties:
@@ -39,12 +38,18 @@ params:
           description: Enables strict ordering of topic messages. You can configure a message group by including a message group ID when publishing a message to a FIFO topic. For each message group ID, all messages are sent and delivered in order of their arrival.
           type: boolean
           default: false
-        content_based_deduplication:
-          # TODO: conditionally hide when fifo is false
-          title: "Content-Based Deduplication"
-          description: Requires FIFO. Enables automatic content-based deduplication using a SHA-256 hash to generate the message deduplication ID using the body of the message. Alternatively a message deduplication ID can be manually set when publishing.
-          type: boolean
-          default: false
+      if:
+        properties:
+          fifo:
+            const: true
+      then:
+        properties:
+          content_based_deduplication:
+            # TODO: conditionally hide when fifo is false
+            title: "Content-Based Deduplication"
+            description: Requires FIFO. Enables automatic content-based deduplication using a SHA-256 hash to generate the message deduplication ID using the body of the message. Alternatively a message deduplication ID can be manually set when publishing.
+            type: boolean
+            default: false
 
 connections:
   required:
