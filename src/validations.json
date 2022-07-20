@@ -1,5 +1,3 @@
 {
-    "do_not_delete": [
-        "aws_sns_topic.main"
-    ]
+    "do_not_delete": []
 }
