@@ -5,6 +5,10 @@ ref: github.com/massdriver-cloud/aws-sns-pubsub-topic
 access: "public"
 type: "bundle"
 
+steps:
+  - path: src
+    provisioner: terraform
+
 params:
   examples:
     - __name: FIFO Topic
