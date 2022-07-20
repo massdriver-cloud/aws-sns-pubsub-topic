@@ -50,12 +50,11 @@ connections:
       $ref: massdriver/aws-iam-role
 
 artifacts:
-  properties: {}
-  # required:
-  #   - topic
-  # properties:
-  #   topic:
-  #     $ref: massdriver/aws-sns-topic
+  required:
+    - topic
+  properties:
+    topic:
+      $ref: massdriver/aws-sns-topic
 
 ui:
   ui:order:

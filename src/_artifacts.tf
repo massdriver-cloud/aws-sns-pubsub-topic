@@ -1,18 +1,19 @@
-# resource "massdriver_artifact" "<name>" {
-#   field                = "the field in the artifacts schema"
-#   provider_resource_id = "AWS ARN or K8S SelfLink"
-#   type                 = "file-name-from-artifacts"
-#   name                 = "a contextual name for the artifact"
-#   artifact = jsonencode(
-#     {
-#       # data = {
-#       #   # This should match the aws-rds-arn.json schema file
-#       #   arn = "aws::..."
-#       # }
-#       # specs = {
-#       #   # Any existing spec in ./specs
-#       #   # aws = {}
-#       # }
-#     }
-#   )
-# }
+resource "massdriver_artifact" "topic" {
+  field                = "topic"
+  provider_resource_id = aws_sns_topic.main.arn
+  name                 = "SNS Topic: ${aws_sns_topic.main.arn}"
+  artifact = jsonencode(
+    {
+      data = {
+        infrastructure = {
+          arn = aws_sns_topic.main.arn
+        }
+      }
+      specs = {
+        aws = {
+          region = var.topic.region
+        }
+      }
+    }
+  )
+}
