@@ -1,7 +1,7 @@
 resource "massdriver_artifact" "topic" {
   field                = "topic"
   provider_resource_id = aws_sns_topic.main.arn
-  name                 = "SNS Topic: ${aws_sns_topic.main.arn}"
+  name                 = "AWS SNS Topic: ${aws_sns_topic.main.arn}"
   artifact = jsonencode(
     {
       data = {

@@ -1,7 +1,3 @@
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-data "aws_partition" "current" {}
-
 locals {
   sns_topic_name = var.topic.fifo ? "${var.md_metadata.name_prefix}.fifo" : var.md_metadata.name_prefix
 }

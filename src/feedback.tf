@@ -1,3 +1,7 @@
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+data "aws_partition" "current" {}
+
 // SNS subscriber endpoint feedback
 resource "aws_iam_policy" "feedback" {
   name        = "${local.sns_topic_name}-sns-subscriber-feedback"

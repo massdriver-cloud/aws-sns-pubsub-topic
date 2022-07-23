@@ -13,12 +13,12 @@ params:
   examples:
     - __name: FIFO Topic
       topic:
-        region: us-west-2
+        region: us-east-1
         fifo: true
         content_based_deduplication: true
     - __name: Topic
       topic:
-        region: us-west-2
+        region: us-east-1
         fifo: false
   required:
     - topic

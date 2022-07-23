@@ -11,6 +11,8 @@ params = JSON.parse(schema_params)
 examples = params["examples"]
 template_params_file = File.read("./src/dev.params.tfvars.json")
 
+$all_cmds = []
+
 examples.each do |example|
   name = example.delete("__name")
   slug_safe_name = name.downcase.gsub(/[^a-z0-9]/, "")
@@ -24,15 +26,12 @@ examples.each do |example|
     f.puts JSON.pretty_generate(example_params)
   end
 
-  plan_dir = "/tmp/massdriver/plans/#{bundle_name}"
-  plan_path = "#{plan_dir}/#{slug_safe_name}.plan"
-  
   var_files = "-var-file ./dev.connections.tfvars.json -var-file #{outfile}"
 
   cmd = [
-    %Q{echo "Example: #{name}\n  Params: #{outfile}\n  Workspace: #{slug_safe_name}"},
-    "mkdir -p #{plan_dir}",
-    "cd ./src",
+    %Q{echo Example: #{name} Params: #{outfile} Workspace: #{slug_safe_name}},
+    "pushd ./src",
+    "terraform init",
     "terraform workspace new #{slug_safe_name} || terraform workspace select #{slug_safe_name}"
   ]
 
@@ -44,12 +43,16 @@ examples.each do |example|
       "terraform destroy #{var_files} -auto-approve"
     ],
     "apply" => [
-      "terraform plan #{var_files} -out #{plan_path}",
-      "terraform apply #{plan_path}"
+      "terraform apply #{var_files} -auto-approve"
     ]
   }
 
-  cmd += (addl_cmds[terraform_cmd])
+  final_cmds = [
+    "popd"
+  ]
 
-  puts `#{cmd.join(' && ')}`
+  cmd += (addl_cmds[terraform_cmd] + final_cmds)
+  $all_cmds += (cmd)
 end
+
+puts $all_cmds.join(' && ')
