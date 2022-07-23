@@ -24,4 +24,3 @@ resource "aws_sns_topic" "main" {
   sqs_failure_feedback_role_arn = aws_iam_role.feedback.arn
   sqs_success_feedback_role_arn = null
 }
-
