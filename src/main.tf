@@ -4,7 +4,7 @@ locals {
 
 resource "aws_sns_topic" "main" {
   name                        = local.sns_topic_name
-  display_name                = coalesce(lookup(var.topic, "display_name", null), var.md_metadata.name_prefix)
+  display_name                = var.md_metadata.name_prefix
   fifo_topic                  = var.topic.fifo
   content_based_deduplication = var.topic.fifo ? var.topic.content_based_deduplication : false
   kms_master_key_id           = "alias/aws/sns"

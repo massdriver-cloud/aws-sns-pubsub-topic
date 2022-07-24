@@ -29,10 +29,6 @@ params:
       properties:
         region:
           $ref: https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/aws-region.json
-        display_name:
-          title: "Display Name"
-          description: "Display name used for SMS and email subscriptions."
-          type: string
         fifo:
           title: "First in, First out"
           description: Enables strict ordering of topic messages. You can configure a message group by including a message group ID when publishing a message to a FIFO topic. For each message group ID, all messages are sent and delivered in order of their arrival.
@@ -65,6 +61,5 @@ ui:
   topic:
     ui:order:
       - region
-      - display_name
       - fifo
       - content_based_deduplication
