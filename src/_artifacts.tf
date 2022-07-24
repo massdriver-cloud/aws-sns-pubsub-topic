@@ -10,7 +10,7 @@ resource "massdriver_artifact" "topic" {
         }
         security = {
           iam = {
-            subscribe = {
+            publish = {
               policy_arn = aws_iam_policy.publish.arn
             }
           }
