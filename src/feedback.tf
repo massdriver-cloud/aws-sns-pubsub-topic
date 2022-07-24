@@ -4,8 +4,8 @@ data "aws_partition" "current" {}
 
 // SNS subscriber endpoint feedback
 resource "aws_iam_policy" "feedback" {
-  name        = "${local.sns_topic_name}-sns-subscriber-feedback"
-  description = "Subscriber delivery status logging for ${local.sns_topic_name}"
+  name        = "${var.md_metadata.name_prefix}-sns-subscriber-feedback"
+  description = "Subscriber delivery status logging for ${var.md_metadata.name_prefix}"
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -36,7 +36,7 @@ resource "aws_iam_policy" "feedback" {
 }
 
 resource "aws_iam_role" "feedback" {
-  name = "${local.sns_topic_name}-sns-subscriber-feedback"
+  name = "${var.md_metadata.name_prefix}-sns-subscriber-feedback"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
