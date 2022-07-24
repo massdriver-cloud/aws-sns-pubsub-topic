@@ -8,6 +8,13 @@ resource "massdriver_artifact" "topic" {
         infrastructure = {
           arn = aws_sns_topic.main.arn
         }
+        security = {
+          iam = {
+            subscribe = {
+              policy_arn = aws_iam_policy.publish.arn
+            }
+          }
+        }
       }
       specs = {
         aws = {
