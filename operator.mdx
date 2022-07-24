@@ -17,3 +17,8 @@
 * [x] display name defaults to Manifest name
 * [x] Failure feedback is configured for all endpoint types to Cloudwatch Logs
   * [x] SNS Feedback (https://docs.aws.amazon.com/sns/latest/dg/sns-topic-attributes.html)
+* [x] Encryption uses AWS Default keys to minimize costs.
+  * Has per pub/sub costs: https://docs.aws.amazon.com/sns/latest/dg/sns-key-management.html
+  * IAM notes: https://aws.amazon.com/blogs/compute/encrypting-messages-published-to-amazon-sns-with-aws-kms/
+* [x] No HTTP Delivery policies are exposed as this is intended for use fanning out to SQS
+  * if you need HTTP delivery see massdriver/aws-sns-webhook-publisher

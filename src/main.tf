@@ -7,6 +7,8 @@ resource "aws_sns_topic" "main" {
   display_name = coalesce(lookup(var.topic, "display_name", null), var.md_metadata.name_prefix)
   fifo_topic   = var.topic.fifo
 
+  kms_master_key_id = "alias/aws/sns"
+
   content_based_deduplication = var.topic.fifo ? var.topic.content_based_deduplication : false
 
   application_failure_feedback_role_arn = aws_iam_role.feedback.arn
