@@ -63,3 +63,6 @@ ui:
       - region
       - fifo
       - content_based_deduplication
+    region:
+      ui:field: supportedCloudLocationsDropdown
+      cloudService: aws
