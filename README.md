@@ -47,8 +47,40 @@ Form input parameters for configuring a bundle for deployment.
 <summary>View</summary>
 
 <!-- PARAMS:START -->
+## Properties
 
-**Params coming soon**
+- **`topic`** *(object)*
+  - **`content_based_deduplication`** *(boolean)*: Requires FIFO. Enables automatic content-based deduplication using a SHA-256 hash to generate the message deduplication ID using the body of the message. Alternatively a message deduplication ID can be manually set when publishing. Default: `False`.
+  - **`fifo`** *(boolean)*: Enables strict ordering of topic messages. You can configure a message group by including a message group ID when publishing a message to a FIFO topic. For each message group ID, all messages are sent and delivered in order of their arrival. Default: `False`.
+  - **`region`** *(string)*: AWS Region to provision in.
+
+    Examples:
+    ```json
+    "us-west-2"
+    ```
+
+## Examples
+
+  ```json
+  {
+      "__name": "FIFO Topic",
+      "topic": {
+          "content_based_deduplication": true,
+          "fifo": true,
+          "region": "us-east-1"
+      }
+  }
+  ```
+
+  ```json
+  {
+      "__name": "Topic",
+      "topic": {
+          "fifo": false,
+          "region": "us-east-1"
+      }
+  }
+  ```
 
 <!-- PARAMS:END -->
 
@@ -62,9 +94,36 @@ Connections from other bundles that this bundle depends on.
 <summary>View</summary>
 
 <!-- CONNECTIONS:START -->
+## Properties
 
-**Connections coming soon**
+- **`aws_authentication`** *(object)*: . Cannot contain additional properties.
+  - **`data`** *(object)*
+    - **`arn`** *(string)*: Amazon Resource Name.
 
+      Examples:
+      ```json
+      "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+      ```
+
+      ```json
+      "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+      ```
+
+    - **`external_id`** *(string)*: An external ID is a piece of data that can be passed to the AssumeRole API of the Security Token Service (STS). You can then use the external ID in the condition element in a role's trust policy, allowing the role to be assumed only when a certain value is present in the external ID.
+  - **`specs`** *(object)*
+    - **`aws`** *(object)*: .
+      - **`region`** *(string)*: AWS Region to provision in.
+
+        Examples:
+        ```json
+        "us-west-2"
+        ```
+
+      - **`resource`** *(string)*
+      - **`service`** *(string)*
+      - **`zone`** *(string)*: AWS Availability Zone.
+
+        Examples:
 <!-- CONNECTIONS:END -->
 
 </details>
@@ -77,9 +136,65 @@ Resources created by this bundle that can be connected to other bundles.
 <summary>View</summary>
 
 <!-- ARTIFACTS:START -->
+## Properties
 
-**Artifacts coming soon**
+- **`topic`** *(object)*: Cannot contain additional properties.
+  - **`data`** *(object)*
+    - **`infrastructure`** *(object)*
+      - **`arn`** *(string)*: Amazon Resource Name.
 
+        Examples:
+        ```json
+        "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+        ```
+
+        ```json
+        "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+        ```
+
+    - **`security`** *(object)*: Informs downstream services of network and/or IAM policies. Cannot contain additional properties.
+      - **`iam`** *(object)*: IAM Policies. Cannot contain additional properties.
+        - **`^[a-z-/]+$`** *(object)*
+          - **`policy_arn`** *(string)*: AWS IAM policy ARN.
+
+            Examples:
+            ```json
+            "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+            ```
+
+            ```json
+            "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+            ```
+
+      - **`network`** *(object)*: AWS security group rules to inform downstream services of ports to open for communication. Cannot contain additional properties.
+        - **`^[a-z-]+$`** *(object)*
+          - **`arn`** *(string)*: Amazon Resource Name.
+
+            Examples:
+            ```json
+            "arn:aws:rds::ACCOUNT_NUMBER:db/prod"
+            ```
+
+            ```json
+            "arn:aws:ec2::ACCOUNT_NUMBER:vpc/vpc-foo"
+            ```
+
+          - **`port`** *(integer)*: Port number. Minimum: `0`. Maximum: `65535`.
+          - **`protocol`** *(string)*: Must be one of: `['tcp', 'udp']`.
+  - **`specs`** *(object)*
+    - **`aws`** *(object)*: .
+      - **`region`** *(string)*: AWS Region to provision in.
+
+        Examples:
+        ```json
+        "us-west-2"
+        ```
+
+      - **`resource`** *(string)*
+      - **`service`** *(string)*
+      - **`zone`** *(string)*: AWS Availability Zone.
+
+        Examples:
 <!-- ARTIFACTS:END -->
 
 </details>
