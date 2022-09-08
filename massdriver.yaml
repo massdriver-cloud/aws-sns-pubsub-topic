@@ -1,7 +1,7 @@
 schema: draft-07
 name: "aws-sns-pubsub-topic"
 description: "AWS SNS Pub/Sub Topic"
-ref: github.com/massdriver-cloud/aws-sns-pubsub-topic
+source_url: github.com/massdriver-cloud/aws-sns-pubsub-topic
 access: "public"
 type: "bundle"
 
