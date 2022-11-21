@@ -87,6 +87,7 @@ params:
                           title: Threshold
                           description: "The current capacity of an Aurora Serverless DB cluster. (Unit: Count)"
                           minimum: 1
+                          default: 1
                         period:
                           type: integer
                           title: Period
@@ -98,6 +99,7 @@ params:
                           type: string
                           title: Statistic
                           description: The calculation for triggering the alarm threshold.
+                          default: Sum
                           enum:
                             - Sum
                             - Average
