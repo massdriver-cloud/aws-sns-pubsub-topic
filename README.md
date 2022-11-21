@@ -56,6 +56,12 @@ Form input parameters for configuring a bundle for deployment.
 <!-- PARAMS:START -->
 ## Properties
 
+- **`monitoring`** *(object)*
+  - **`mode`** *(string)*: Enable and customize CloudWatch metric alarms. Default: `AUTOMATED`.
+    - **One of**
+      - Automated
+      - Custom
+      - Disabled
 - **`topic`** *(object)*
   - **`content_based_deduplication`** *(boolean)*: Requires FIFO. Enables automatic content-based deduplication using a SHA-256 hash to generate the message deduplication ID using the body of the message. Alternatively a message deduplication ID can be manually set when publishing. Default: `False`.
   - **`fifo`** *(boolean)*: Enables strict ordering of topic messages. You can configure a message group by including a message group ID when publishing a message to a FIFO topic. For each message group ID, all messages are sent and delivered in order of their arrival. Default: `False`.
@@ -74,7 +80,7 @@ Form input parameters for configuring a bundle for deployment.
       "topic": {
           "content_based_deduplication": true,
           "fifo": true,
-          "region": "us-east-1"
+          "region": "us-west-2"
       }
   }
   ```
@@ -84,7 +90,7 @@ Form input parameters for configuring a bundle for deployment.
       "__name": "Topic",
       "topic": {
           "fifo": false,
-          "region": "us-east-1"
+          "region": "us-west-2"
       }
   }
   ```
@@ -126,11 +132,6 @@ Connections from other bundles that this bundle depends on.
         "us-west-2"
         ```
 
-      - **`resource`** *(string)*
-      - **`service`** *(string)*
-      - **`zone`** *(string)*: AWS Availability Zone.
-
-        Examples:
 <!-- CONNECTIONS:END -->
 
 </details>
@@ -197,11 +198,6 @@ Resources created by this bundle that can be connected to other bundles.
         "us-west-2"
         ```
 
-      - **`resource`** *(string)*
-      - **`service`** *(string)*
-      - **`zone`** *(string)*: AWS Availability Zone.
-
-        Examples:
 <!-- ARTIFACTS:END -->
 
 </details>

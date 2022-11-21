@@ -13,12 +13,12 @@ params:
   examples:
     - __name: FIFO Topic
       topic:
-        region: us-east-1
+        region: us-west-2
         fifo: true
         content_based_deduplication: true
     - __name: Topic
       topic:
-        region: us-east-1
+        region: us-west-2
         fifo: false
   required:
     - topic
@@ -40,6 +40,67 @@ params:
           description: Requires FIFO. Enables automatic content-based deduplication using a SHA-256 hash to generate the message deduplication ID using the body of the message. Alternatively a message deduplication ID can be manually set when publishing.
           type: boolean
           default: false
+    monitoring:
+      type: object
+      title: Monitoring
+      properties:
+        mode:
+          title: Alarm Mode
+          description: Enable and customize CloudWatch metric alarms.
+          type: string
+          default: AUTOMATED
+          oneOf:
+            - const: AUTOMATED
+              title: Automated
+            - const: CUSTOM
+              title: Custom
+            - const: DISABLED
+              title: Disabled
+      dependencies:
+        mode:
+          oneOf:
+            - properties:
+                mode:
+                  const: AUTOMATED
+            - properties:
+                mode:
+                  const: DISABLED
+            - properties:
+                mode:
+                  const: CUSTOM
+                alarms:
+                  type: object
+                  title: Alarms
+                  properties:
+                    failed_notifications:
+                      title: Failed Notifications
+                      description: The number of messages that Amazon SNS failed to deliver.
+
+                      type: object
+                      required:
+                        - threshold
+                        - period
+                        - statistic
+                      properties:
+                        threshold:
+                          type: integer
+                          title: Threshold
+                          description: "The current capacity of an Aurora Serverless DB cluster. (Unit: Count)"
+                          minimum: 1
+                        period:
+                          type: integer
+                          title: Period
+                          minimum: 1
+                          maximum: 86400
+                          default: 300
+                          description: The length of time associated with this statistic.
+                        statistic:
+                          type: string
+                          title: Statistic
+                          description: The calculation for triggering the alarm threshold.
+                          enum:
+                            - Sum
+                            - Average
 
 connections:
   required:
@@ -57,7 +118,8 @@ artifacts:
 
 ui:
   ui:order:
-    - "topic"
+    - topic
+    - monitoring
   topic:
     ui:order:
       - region
