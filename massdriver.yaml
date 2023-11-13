@@ -34,6 +34,7 @@ params:
           description: Enables strict ordering of topic messages. You can configure a message group by including a message group ID when publishing a message to a FIFO topic. For each message group ID, all messages are sent and delivered in order of their arrival.
           type: boolean
           default: false
+          $md.immutable: true
         content_based_deduplication:
           # TODO: conditionally hide when fifo is false
           title: "Content-Based Deduplication"
