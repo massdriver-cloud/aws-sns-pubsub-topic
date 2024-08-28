@@ -1,8 +1,8 @@
-### AWS Simple Notification Service (SNS)
+# AWS Simple Notification Service (SNS)
 
 AWS Simple Notification Service (SNS) is a fully managed messaging service that enables you to decouple microservices, distributed systems, and serverless applications. It provides a highly durable, secure, and fully managed pub/sub messaging system to simplify communication between applications and microservices. SNS allows you to fan-out messages to a large number of subscribers, including Amazon SQS queues, AWS Lambda functions, and HTTP/S endpoints.
 
-### Design Decisions
+## Design Decisions
 
 This module is designed to create and manage AWS SNS topics, along with necessary IAM roles and policies for security and monitoring purposes. Here are some key design decisions:
 
@@ -12,13 +12,20 @@ This module is designed to create and manage AWS SNS topics, along with necessar
 - **KMS Encryption**: The SNS topic data is encrypted at rest using AWS-managed keys by default.
 - **Feedback Mechanisms**: IAM roles and policies are created to log successful or failed deliveries to integrate with CloudWatch Logs, aiding in monitoring and troubleshooting.
 
-### Runbook
+## Helpful Links
 
-#### Troubleshooting SNS Message Delivery Failures
+* [AWS Pub/Sub Pattern](https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-integrating-microservices/pub-sub.html)
+* [SNS FAQs](https://aws.amazon.com/sns/faqs/#:~:text=FIFO%20topics)
+* [Delivery policies](https://docs.aws.amazon.com/sns/latest/dg/sns-message-delivery-retries.html)
+* [Example IAM policies](https://docs.aws.amazon.com/sns/latest/dg/sns-access-policy-use-cases.html)
+
+## Runbook
+
+### Troubleshooting SNS Message Delivery Failures
 
 Occasionally, you may encounter issues with message delivery failures. The following steps can help identify and resolve these issues.
 
-##### Check CloudWatch Logs
+#### Check CloudWatch Logs
 
 SNS can log delivery attempts to CloudWatch Logs. To check for errors in delivery:
 
@@ -26,7 +33,7 @@ SNS can log delivery attempts to CloudWatch Logs. To check for errors in deliver
 2. **Locate the log group**: The log group will typically follow the format: `sns/REGION/ACCOUNT-ID/SNS-TOPIC-NAME`.
 3. **Examine the log streams**: Look for any error messages or failed delivery attempts.
 
-##### Using AWS CLI
+#### Using AWS CLI
 
 To list the CloudWatch log groups:
 
@@ -46,7 +53,7 @@ To fetch log events for a specific stream:
 aws logs get-log-events --log-group-name "sns/REGION/ACCOUNT-ID/SNS-TOPIC-NAME" --log-stream-name "log-stream-id"
 ```
 
-##### Check SNS Topic Attributes
+#### Check SNS Topic Attributes
 
 Verify the status and configuration of the SNS topic:
 
@@ -56,7 +63,7 @@ aws sns get-topic-attributes --topic-arn "arn:aws:sns:REGION:ACCOUNT-ID:SNS-TOPI
 
 This command returns details about the topic including configuration and any potential misconfigurations.
 
-##### Inspect IAM Policies
+#### Inspect IAM Policies
 
 Ensure that the necessary IAM roles and policies are correctly attached and have the required permissions:
 
@@ -81,7 +88,7 @@ aws iam get-policy --policy-arn "arn:aws:iam::ACCOUNT-ID:policy/POLICY-NAME"
 aws iam get-policy-version --policy-arn "arn:aws:iam::ACCOUNT-ID:policy/POLICY-NAME" --version-id "VERSION-ID"
 ```
 
-##### Monitor CloudWatch Alarms
+#### Monitor CloudWatch Alarms
 
 Ensure CloudWatch Alarms for failed notifications are properly set:
 
