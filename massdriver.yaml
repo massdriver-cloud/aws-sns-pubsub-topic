@@ -3,7 +3,6 @@ name: aws-sns-pubsub-topic
 version: 1.0.0
 description: AWS SNS Pub/Sub Topic
 source_url: https://github.com/massdriver-cloud/aws-sns-pubsub-topic
-type: application
 steps:
 - path: src
   provisioner: opentofu
