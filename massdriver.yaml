@@ -1,43 +1,41 @@
 schema: draft-07
-name: "aws-sns-pubsub-topic"
-description: "AWS SNS Pub/Sub Topic"
-source_url: github.com/massdriver-cloud/aws-sns-pubsub-topic
-access: "public"
-type: "bundle"
+name: aws-sns-pubsub-topic
+version: 1.0.0
+description: AWS SNS Pub/Sub Topic
+source_url: https://github.com/massdriver-cloud/aws-sns-pubsub-topic
 
 steps:
-  - path: src
-    provisioner: terraform
+- path: src
+  provisioner: opentofu
 
 params:
   examples:
-    - __name: FIFO Topic
-      topic:
-        region: us-west-2
-        fifo: true
-        content_based_deduplication: true
-    - __name: Topic
-      topic:
-        region: us-west-2
-        fifo: false
+  - __name: FIFO Topic
+    topic:
+      region: us-west-2
+      fifo: true
+      content_based_deduplication: true
+  - __name: Topic
+    topic:
+      region: us-west-2
+      fifo: false
   required:
-    - topic
+  - topic
   properties:
     topic:
       title: Topic
       type: object
       properties:
         region:
-          $ref: https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/aws-region.json
+          "$ref": https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/aws-region.json
         fifo:
-          title: "First in, First out"
+          title: First in, First out
           description: Enables strict ordering of topic messages. You can configure a message group by including a message group ID when publishing a message to a FIFO topic. For each message group ID, all messages are sent and delivered in order of their arrival.
           type: boolean
           default: false
-          $md.immutable: true
+          "$md.immutable": true
         content_based_deduplication:
-          # TODO: conditionally hide when fifo is false
-          title: "Content-Based Deduplication"
+          title: Content-Based Deduplication
           description: Requires FIFO. Enables automatic content-based deduplication using a SHA-256 hash to generate the message deduplication ID using the body of the message. Alternatively a message deduplication ID can be manually set when publishing.
           type: boolean
           default: false
@@ -51,83 +49,82 @@ params:
           type: string
           default: AUTOMATED
           oneOf:
-            - const: AUTOMATED
-              title: Automated
-            - const: CUSTOM
-              title: Custom
-            - const: DISABLED
-              title: Disabled
+          - const: AUTOMATED
+            title: Automated
+          - const: CUSTOM
+            title: Custom
+          - const: DISABLED
+            title: Disabled
       dependencies:
         mode:
           oneOf:
-            - properties:
-                mode:
-                  const: AUTOMATED
-            - properties:
-                mode:
-                  const: DISABLED
-            - properties:
-                mode:
-                  const: CUSTOM
-                alarms:
-                  type: object
-                  title: Alarms
-                  properties:
-                    failed_notifications:
-                      title: Failed Notifications
-                      description: The number of messages that Amazon SNS failed to deliver.
-
-                      type: object
-                      required:
-                        - threshold
-                        - period
-                        - statistic
-                      properties:
-                        threshold:
-                          type: integer
-                          title: Threshold
-                          description: "The current capacity of an Aurora Serverless DB cluster. (Unit: Count)"
-                          minimum: 1
-                          default: 1
-                        period:
-                          type: integer
-                          title: Period
-                          minimum: 1
-                          maximum: 86400
-                          default: 300
-                          description: The length of time associated with this statistic.
-                        statistic:
-                          type: string
-                          title: Statistic
-                          description: The calculation for triggering the alarm threshold.
-                          default: Sum
-                          enum:
-                            - Sum
-                            - Average
+          - properties:
+              mode:
+                const: AUTOMATED
+          - properties:
+              mode:
+                const: DISABLED
+          - properties:
+              mode:
+                const: CUSTOM
+              alarms:
+                type: object
+                title: Alarms
+                properties:
+                  failed_notifications:
+                    title: Failed Notifications
+                    description: The number of messages that Amazon SNS failed to deliver.
+                    type: object
+                    required:
+                    - threshold
+                    - period
+                    - statistic
+                    properties:
+                      threshold:
+                        type: integer
+                        title: Threshold
+                        description: 'The current capacity of an Aurora Serverless DB cluster. (Unit: Count)'
+                        minimum: 1
+                        default: 1
+                      period:
+                        type: integer
+                        title: Period
+                        minimum: 1
+                        maximum: 86400
+                        default: 300
+                        description: The length of time associated with this statistic.
+                      statistic:
+                        type: string
+                        title: Statistic
+                        description: The calculation for triggering the alarm threshold.
+                        default: Sum
+                        enum:
+                        - Sum
+                        - Average
 
 connections:
   required:
-    - aws_authentication
+  - aws_authentication
   properties:
     aws_authentication:
-      $ref: massdriver/aws-iam-role
+      "$ref": massdriver/aws-iam-role
 
 artifacts:
   required:
-    - topic
+  - topic
   properties:
     topic:
-      $ref: massdriver/aws-sns-topic
-
+      "$ref": massdriver/aws-sns-topic
+      
 ui:
   ui:order:
-    - topic
-    - monitoring
+  - topic
+  - monitoring
   topic:
     ui:order:
-      - region
-      - fifo
-      - content_based_deduplication
+    - region
+    - fifo
+    - content_based_deduplication
     region:
       ui:field: supportedCloudLocationsDropdown
       cloudService: aws
