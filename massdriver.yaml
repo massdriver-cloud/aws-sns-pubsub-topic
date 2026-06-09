@@ -107,14 +107,14 @@ connections:
   - aws_authentication
   properties:
     aws_authentication:
-      "$ref": massdriver/aws-iam-role
+      "$ref": aws-iam-role
 
 artifacts:
   required:
   - topic
   properties:
     topic:
-      "$ref": massdriver/aws-sns-topic
+      "$ref": aws-sns-topic
       
 ui:
   ui:order:
